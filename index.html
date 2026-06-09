@@ -4,6 +4,9 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Para Luisa</title>
+<meta name="description" content="Para ti, Luisa. Gracias por todo lo que fuimos." />
+<meta name="theme-color" content="#fbf7f4" />
+<meta name="robots" content="noindex" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
@@ -36,6 +39,7 @@
     opacity: 0;
     pointer-events: none;
     animation: fall linear infinite;
+    will-change: transform;
     z-index: 0;
   }
   @keyframes fall {
@@ -216,6 +220,20 @@
       padding: 4rem 1.5rem 6rem;
     }
   }
+
+  /* Si el usuario prefiere menos movimiento, lo respetamos */
+  @media (prefers-reduced-motion: reduce) {
+    .petal { display: none; }
+    *, *::before, *::after {
+      animation-duration: .001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: .001ms !important;
+    }
+    .pre, .hero h1, .hero .sub, .scroll-hint, .reveal {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
 </style>
 </head>
 <body>
@@ -257,10 +275,10 @@
   </section>
 
   <section class="gallery reveal">
-    <div class="photo"><div class="placeholder"><span>♡</span>foto1.jpg</div></div>
-    <div class="photo"><div class="placeholder"><span>♡</span>foto2.jpg</div></div>
-    <div class="photo"><div class="placeholder"><span>♡</span>foto3.jpg</div></div>
-    <div class="photo"><div class="placeholder"><span>♡</span>foto4.jpg</div></div>
+    <div class="photo"><img src="fotos/foto1.jpg" alt="Nosotros" loading="lazy" decoding="async" width="1600" height="1200"></div>
+    <div class="photo"><img src="fotos/foto2.jpg" alt="Nosotros" loading="lazy" decoding="async" width="1600" height="1200"></div>
+    <div class="photo"><img src="fotos/foto3.jpg" alt="Nosotros" loading="lazy" decoding="async" width="1600" height="1200"></div>
+    <div class="photo"><img src="fotos/foto4.jpg" alt="Nosotros" loading="lazy" decoding="async" width="1600" height="1200"></div>
   </section>
 
   <div class="divider reveal"></div>
@@ -285,7 +303,7 @@
     // Pétalos cayendo
     (function () {
       const symbols = ['🍓','❀','🍓','✿','♡','🍓','❁'];
-      const n = 18;
+      const n = window.innerWidth < 600 ? 9 : 15;
       for (let i = 0; i < n; i++) {
         const p = document.createElement('div');
         p.className = 'petal';
@@ -305,13 +323,15 @@
     }, { threshold: 0.12 });
     document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-    // Mostrar foto real si existe; si no, mantener el placeholder
-    document.querySelectorAll('.photo').forEach((box) => {
-      const name = box.querySelector('.placeholder').textContent.replace('♡','').trim();
-      const img = new Image();
-      img.src = 'fotos/' + name;
-      img.alt = 'Nosotros';
-      img.onload = () => { box.innerHTML = ''; box.appendChild(img); };
+    // Si alguna foto falta, mostrar un corazón en su lugar
+    document.querySelectorAll('.photo img').forEach((img) => {
+      img.addEventListener('error', () => {
+        const name = (img.getAttribute('src') || '').split('/').pop();
+        const ph = document.createElement('div');
+        ph.className = 'placeholder';
+        ph.innerHTML = '<span>♡</span>' + name;
+        img.replaceWith(ph);
+      });
     });
   </script>
 </body>
