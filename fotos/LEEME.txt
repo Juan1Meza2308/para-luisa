@@ -1,0 +1,22 @@
+CÓMO PONER LAS FOTOS
+=====================
+
+1. Guarda tus 4 fotos dentro de esta carpeta "fotos".
+
+2. Renómbralas exactamente así (en minúsculas):
+
+   foto1.jpg   ->  la de la playa de noche (el beso en la mejilla)
+   foto2.jpg   ->  la selfie de cerca (ella sacando la lengua)
+   foto3.jpg   ->  la del parque / aire libre
+   foto4.jpg   ->  la de la tienda (con los sombreros)
+
+   (El orden lo puedes cambiar como quieras, solo respeta los nombres
+   foto1.jpg, foto2.jpg, foto3.jpg, foto4.jpg)
+
+3. Listo. Abre "index.html" (en la carpeta de arriba) y las fotos
+   aparecerán solas en la galería.
+
+Notas:
+- Tienen que terminar en .jpg. Si alguna es .png o .jpeg, cámbiale el
+  nombre a .jpg (o avísame y lo ajusto).
+- Si quieres más fotos, dímelo y amplío la galería.
